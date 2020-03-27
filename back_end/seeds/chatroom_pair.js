@@ -6,32 +6,24 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex("chatroom_pair").insert([
         {
-          roomID: "1000",
+          roomID: "1",
           username_A: "long",
-          useremail_A: "long@email.com",
-          username_B: "harry",
-          useremail_B: "harry@email.com"
+          username_B: "harry"
         },
         {
-          roomID: "2000",
+          roomID: "2",
           username_A: "long",
-          useremail_A: "long@email.com",
-          username_B: "jane",
-          useremail_B: "jane@email.com"
+          username_B: "jane"
         },
         {
-          roomID: "3000",
+          roomID: "3",
           username_A: "long",
-          useremail_A: "long@email.com",
-          username_B: "charlie",
-          useremail_B: "charlie@email.com"
+          username_B: "charlie"
         },
         {
-          roomID: "4000",
+          roomID: "4",
           username_A: "long",
-          useremail_A: "long@email.com",
-          username_B: "arthur",
-          useremail_B: "arthur@email.com"
+          username_B: "arthur"
         }
       ]);
     });

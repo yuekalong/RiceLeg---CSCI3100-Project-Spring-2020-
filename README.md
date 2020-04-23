@@ -7,7 +7,7 @@ This software is created by the CSCI3100 students who studied in 2020 semester 2
 
 It contains two folder. One is called `front-end` and another one is called`back-end`. You are required to start both program in order to test our full application.
 
- - [ ] not finsihed..... this is only the initial code submission for our project :(
+ - [ ] almost finsihed..... anyway this is the final code submission for our project :(
 
 ****
 **Team Member**

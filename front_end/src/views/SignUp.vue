@@ -10,7 +10,7 @@
           >
             <v-container fill-height fluid>
               <v-layout fill-height>
-                <v-flex xs12 align-end flexbox> </v-flex>
+                <v-flex xs12 align-end flexbox></v-flex>
               </v-layout>
             </v-container>
           </v-img>
@@ -21,27 +21,15 @@
               <v-flex xs12 md6>
                 <v-form ref="form" v-model="valid" :lazy-validation="lazy">
                   <div class="red--text">{{ errMsg }}</div>
-                  <v-text-field
-                    v-model="name"
-                    :counter="10"
-                    :rules="nameRules"
-                    label="Name"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="name" :rules="nameRules" label="Username" required></v-text-field>
                   <v-text-field
                     v-model="password"
                     :rules="passwordRules"
-                    :counter="6"
                     label="Password"
                     type="password"
                     required
                   ></v-text-field>
-                  <v-text-field
-                    v-model="email"
-                    :rules="emailRules"
-                    label="E-mail"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
                   <v-text-field
                     v-model="displayName"
@@ -50,12 +38,7 @@
                     required
                   ></v-text-field>
 
-                  <v-text-field
-                    v-model="major"
-                    :rules="majorRules"
-                    label="Major"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="major" :rules="majorRules" label="Major" required></v-text-field>
 
                   <v-select
                     :items="labels"
@@ -83,12 +66,7 @@
                     </template>
                   </v-select>
 
-                  <v-text-field
-                    v-model="year"
-                    :rules="yearRules"
-                    label="Year"
-                    required
-                  ></v-text-field>
+                  <v-text-field v-model="year" :rules="yearRules" label="Year" required></v-text-field>
 
                   <v-text-field
                     v-model="selfIntro"
@@ -111,13 +89,7 @@
             <v-spacer></v-spacer>
             <v-btn text :to="'/'">Return To Home</v-btn>
 
-            <v-btn
-              :disabled="!valid"
-              color="success"
-              class="mr-4"
-              @click="submitData"
-              >Submit
-            </v-btn>
+            <v-btn :disabled="!valid" color="success" class="mr-4" @click="submitData">Submit</v-btn>
 
             <v-snackbar v-model="finished">
               {{ finishedMsg }}

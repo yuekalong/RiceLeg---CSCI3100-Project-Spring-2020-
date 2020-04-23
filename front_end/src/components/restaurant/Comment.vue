@@ -15,7 +15,10 @@
                 style="text-align:center; border: 1px solid #FFB6D0;"
               >
                 <v-rating :value="parseInt(item.rating)" readonly></v-rating>
-                <v-card-text class="secondary--text headline">{{ item.opinion }}</v-card-text>
+                <v-card-text
+                  class="secondary--text headline"
+                  style="word-break: break-all;"
+                >{{ item.opinion }}</v-card-text>
               </v-card>
             </v-col>
           </v-row>
@@ -95,6 +98,8 @@ export default {
             if (res.data.success) {
               this.dialog = false;
               this.snackbar = true;
+              this.newComment = "";
+              this.newRating = null;
             }
           });
       } else {

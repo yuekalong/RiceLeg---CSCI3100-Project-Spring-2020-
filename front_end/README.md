@@ -19,3 +19,6 @@ This software is created by the CSCI3100 students who studied in 2020 semester 2
 > 2. To build up the same testing enviroment, first enter `yarn install` in terminal to download all the node modules.
 >
 > 3. Last step, to start the front end, please enter `yarn serve` to start it. It will using the port 8080 as default.
+
+**Testing Account**
+All the account with the encrypted password => '1234aA!'

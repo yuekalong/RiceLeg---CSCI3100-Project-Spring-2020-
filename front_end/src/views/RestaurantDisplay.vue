@@ -26,31 +26,24 @@
 
         <template v-slot:default="props">
           <v-row>
-            <v-col
-              v-for="item in props.items"
-              :key="item.name"
-              cols="12"
-              sm="12"
-              md="6"
-              lg="6"
-            >
+            <v-col v-for="item in props.items" :key="item.name" cols="12" sm="12" md="6" lg="6">
               <v-card>
                 <div>
                   <v-img
                     class="white--text align-end dark"
                     height="200px"
-                    src="@/assets/matching_photo/meal_1.jpg"
+                    src="@/assets/matching_photo/meal_7.jpg"
                     gradient="to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.4)"
                   >
-                    <v-card-title class="display-1">{{
+                    <v-card-title class="display-1">
+                      {{
                       item.restaurantName
-                    }}</v-card-title>
+                      }}
+                    </v-card-title>
                   </v-img>
                 </div>
                 <v-card-text>
-                  <div class="headline py-0">
-                    {{ item.restaurantDestination }}
-                  </div>
+                  <div class="headline py-0">{{ item.restaurantDestination }}</div>
                   <div class="subtitle-1 py-0">
                     Daily: {{ item.dailyOpeningTime }} -
                     {{ item.dailyClosingTime }}
@@ -92,28 +85,11 @@
 
             <v-spacer></v-spacer>
 
-            <span
-              class="mr-4
-            grey--text"
-            >
-              Page {{ page }} of {{ numberOfPages }}
-            </span>
-            <v-btn
-              fab
-              dark
-              color="secondary darken-3"
-              class="mr-1"
-              @click="formerPage"
-            >
+            <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
+            <v-btn fab dark color="secondary darken-3" class="mr-1" @click="formerPage">
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
-            <v-btn
-              fab
-              dark
-              color="secondary darken-3"
-              class="ml-1"
-              @click="nextPage"
-            >
+            <v-btn fab dark color="secondary darken-3" class="ml-1" @click="nextPage">
               <v-icon>mdi-chevron-right</v-icon>
             </v-btn>
           </v-row>

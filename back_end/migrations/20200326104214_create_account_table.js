@@ -8,7 +8,6 @@ exports.up = function(knex) {
     table.string("major");
     table.string("college");
     table.string("selfIntro");
-    table.string("propicID");
   });
 };
 

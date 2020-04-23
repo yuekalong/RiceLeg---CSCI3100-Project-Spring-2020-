@@ -14,6 +14,30 @@ module.exports = {
       next(err);
     }
   },
+  queryRequest: function(req, res, next) {
+    try {
+      console.log("SendRequestController.queryRequestt started!");
+      return standardServiceResponse(res, next, testServices.queryRequest());
+    } catch (err) {
+      console.log(
+        "Error: SendRequestController.queryRequest: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
+  queryInvitation: function(req, res, next) {
+    try {
+      console.log("SendRequestController.queryInivation started!");
+      return standardServiceResponse(res, next, testServices.queryInvitation());
+    } catch (err) {
+      console.log(
+        "Error: SendRequestController.queryInivation: " +
+          JSON.parse(err.message)["message"]
+      );
+      next(err);
+    }
+  },
   queryInsertRequestInfo: function(req, res, next) {
     try {
       console.log("SendRequestController.queryInsertRequestInfo started!");

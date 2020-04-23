@@ -2,7 +2,7 @@ const { standardServiceResponse } = require("../utils/ResponseHandler");
 const testServices = require("../services/TestServices.js");
 
 module.exports = {
-  showHelloWorldControl: function(req, res, next) {
+  showHelloWorldControl: function (req, res, next) {
     try {
       console.log("TestController.showHelloWorldControl started!");
       return standardServiceResponse(
@@ -18,7 +18,7 @@ module.exports = {
       next(err);
     }
   },
-  querySomeData: function(req, res, next) {
+  querySomeData: function (req, res, next) {
     try {
       console.log("TestController.querySomeData started!");
       return standardServiceResponse(res, next, testServices.querySomeData());
@@ -30,12 +30,12 @@ module.exports = {
       next(err);
     }
   },
-  queryInsertData: function(req, res, next) {
+  queryInsertData: function (req, res, next) {
     try {
       console.log("TestController.queryInsertData started!");
       obj = {
         id: req.body.id,
-        name: req.body.name
+        name: req.body.name,
       };
       console.log(obj);
       return standardServiceResponse(
@@ -50,5 +50,5 @@ module.exports = {
       );
       next(err);
     }
-  }
+  },
 };

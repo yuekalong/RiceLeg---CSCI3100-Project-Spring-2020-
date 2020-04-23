@@ -1,154 +1,183 @@
 <template>
-  <div id="restaurant_display">
-    <p> "Restaurant" </p>
-    {{data}}
-    <div class="col-sm-2 sidenav"> 
-                <label for="cars">Sorted by:</label>
-                <select v-model="selected">
-                  <option v-for="item in vals" :value="item.value" :key="item.value">{{item.value}}></option>
-                </select>
-                <hr>
-                <span>Selected: {{ selected }}</span>
-              </div>
-      <ul>
-        <li v-for="index,item in data">
-          
-          <div class="container-fluid text-center">    
-            <div class="row content">
-              
-            <div class="col-sm-8 text-left"> 
-              <h1>{{data[0][item].restaurantName}}</h1>
-              <h2> 10 students have been here </h2>
-              <h5> <span class="fa fa-user"></span></span> OpeningHour:{{data[0][item].dailyOpeningTime}}-{{data[0][item].dailyClosingTime}}</h5> <!-- details-->
-              <h5> Venue: {{data[0][item].restaurantDestination}}</h5>
-              <hr>
-              <h3>Any Comment?</h3>
-              <v-text-field v-model = "opinion"></v-text-field>
-              <div id='example-3'>
-                <input type="radio" id="1" value="1" v-model="checkedNum">
-                <label for="one">One</label>
-                <input type="radio" id="2" value="2" v-model="checkedNum">
-                <label for="two">Two</label>
-                <input type="radio" id="3" value="3" v-model="checkedNum">
-                <label for="three">Three</label>
-                <input type="radio" id="4" value="4" v-model="checkedNum">
-                <label for="four">Four</label>
-                <input type="radio" id="5" value="5" v-model="checkedNum">
-                <label for="five">Five</label>
-                <br>
-                <span>Checked num: {{ checkedNum }} </span>
-              </div>
-              <p>{{getName(data[0][item].restaurantName)}}</p>
-              <v-btn @click="updateData">insert!</v-btn>
-            </div>
-            <div class="col-sm-2 sidenav">
-              <div class="well">
-                <p>{picturelink}</p>
-              </div>
-              <div class="well">
-                <p>{picturelink}}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        </li>
-      </ul>
+  <div id="RestaurantDisplay">
+    <v-container grid-list-xl>
+      <v-data-iterator
+        :items="restaurant"
+        :items-per-page.sync="itemsPerPage"
+        :page="page"
+        :search="search"
+        :sort-by="sortBy.toLowerCase()"
+        :sort-desc="sortDesc"
+        hide-default-footer
+      >
+        <template v-slot:header>
+          <v-toolbar dark color="primary darken-1" class="mb-1">
+            <v-text-field
+              v-model="search"
+              clearable
+              flat
+              solo-inverted
+              hide-details
+              prepend-inner-icon="mdi-magnify"
+              label="Search"
+            ></v-text-field>
+          </v-toolbar>
+        </template>
+
+        <template v-slot:default="props">
+          <v-row>
+            <v-col
+              v-for="item in props.items"
+              :key="item.name"
+              cols="12"
+              sm="12"
+              md="6"
+              lg="6"
+            >
+              <v-card>
+                <div>
+                  <v-img
+                    class="white--text align-end dark"
+                    height="200px"
+                    src="@/assets/matching_photo/meal_1.jpg"
+                    gradient="to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.4)"
+                  >
+                    <v-card-title class="display-1">{{
+                      item.restaurantName
+                    }}</v-card-title>
+                  </v-img>
+                </div>
+                <v-card-text>
+                  <div class="headline py-0">
+                    {{ item.restaurantDestination }}
+                  </div>
+                  <div class="subtitle-1 py-0">
+                    Daily: {{ item.dailyOpeningTime }} -
+                    {{ item.dailyClosingTime }}
+                  </div>
+                  <div class="subtitle-1 py-0">
+                    Holiday: {{ item.holidayOpeningTime }} -
+                    {{ item.holidayClosingTime }}
+                  </div>
+                </v-card-text>
+                <v-card-actions>
+                  <v-spacer />
+                  <Comment :restaurantName="item.restaurantName" />
+                </v-card-actions>
+              </v-card>
+            </v-col>
+          </v-row>
+        </template>
+
+        <template v-slot:footer>
+          <v-row class="mt-2 mx-5" align="center" justify="center">
+            <span class="grey--text">Items per page</span>
+            <v-menu offset-y>
+              <template v-slot:activator="{ on }">
+                <v-btn dark text color="primary" class="ml-2" v-on="on">
+                  {{ itemsPerPage }}
+                  <v-icon>mdi-chevron-down</v-icon>
+                </v-btn>
+              </template>
+              <v-list>
+                <v-list-item
+                  v-for="(number, index) in itemsPerPageArray"
+                  :key="index"
+                  @click="updateItemsPerPage(number)"
+                >
+                  <v-list-item-title>{{ number }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+
+            <v-spacer></v-spacer>
+
+            <span
+              class="mr-4
+            grey--text"
+            >
+              Page {{ page }} of {{ numberOfPages }}
+            </span>
+            <v-btn
+              fab
+              dark
+              color="secondary darken-3"
+              class="mr-1"
+              @click="formerPage"
+            >
+              <v-icon>mdi-chevron-left</v-icon>
+            </v-btn>
+            <v-btn
+              fab
+              dark
+              color="secondary darken-3"
+              class="ml-1"
+              @click="nextPage"
+            >
+              <v-icon>mdi-chevron-right</v-icon>
+            </v-btn>
+          </v-row>
+        </template>
+      </v-data-iterator>
+    </v-container>
   </div>
-  
 </template>
 
 <script>
 import { service } from "@/plugins/request_service";
+import Comment from "@/components/restaurant/Comment";
 
 export default {
-  name: "restaurant_display",
-  components: {},
+  components: {
+    Comment
+  },
   data: () => ({
-    data: "",
-    restaurantName : "",
-    checkedNum: [],
-    opinion: "",
-    selected: 'None',
-    vals: [{
-                value: 'Name',
-                tags: ['hello', 'test']
-            },
-            {
-                value: 'OpeningTime',
-                tags: ['hello']
-            },
-            {
-                value: 'ClosingTime',
-                tags: ['hello', 'test']
-            },
-            {
-                value: 'Rating',
-                tags: ['rating']
-            }
-        ]
+    itemsPerPageArray: [4, 8, 12],
+    search: "",
+    filter: {},
+    sortDesc: false,
+    page: 1,
+    itemsPerPage: 4,
+    sortBy: "restaurantName",
+    restaurant: [
+      {
+        restaurantName: "aaaa",
+        restaurantDestination: "aaaa",
+        dailyOpeningTime: "aaaaa",
+        dailyClosingTime: "aaaa",
+        holidayOpeningTime: "aaaa",
+        holidayClosingTime: "aaaaa"
+      }
+    ]
   }),
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.restaurant.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter(key => key !== `Name`);
+    }
+  },
   mounted() {
-    this.getData();
-    //getName(res_name);
+    this.fetchData();
   },
   methods: {
-    getName(res_name){
-      
-      this.restaurantName = res_name;
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
-    XD() {
-      console.log("yeah!!!");
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
     },
-    getData() {
-      service.get("/restaurant/query").then(res => {
-        console.log(res);
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
+    fetchData() {
+      service.get(`/restaurant/getAllRestaurant/`).then(res => {
         if (res.data.success) {
-          this.data = res.data.data;
+          this.restaurant = res.data.data;
         }
       });
-    },
-    updateData() {
-      console.log("XD");
-      //this.restaurantName = data[0][item].restaurantName;
-      service.post("/restaurant/update",{
-         opinion: this.opinion,
-         
-         rating: this.checkedNum,
-         restaurantName: this.restaurantName
-      })
-      .then(res => {
-        if (res.data.success)
-          console.log("success!");
-        else
-          console.log("fail!");
-        
-      });
-    },
-    insertData() {
-      service
-        .post("/restaurant/update", {
-          id: this.id,
-          name: this.name
-        })
-        .then(res => {
-          if (res.data.success) {
-            console.log("success!");
-          }
-        });
     }
-  
   }
-}
+};
 </script>
-
-<style scoped lang="css">
-$padding-size: 10px;
-.box{
-  background-color: lightgrey;
-  width: 300px;
-  border: 15px solid green;
-  padding: 50px;
-  margin: 20px;
-}
-
-</style>

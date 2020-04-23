@@ -4,6 +4,19 @@ import store from "@/store";
 
 Vue.use(Router);
 
+const loggedIn = async () => {
+  try {
+    const logged = await store.dispatch("restoreSession");
+    if (logged) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    return false;
+  }
+};
+
 const router = new Router({
   mode: "history",
   base: process.env.BASE_URL,
@@ -15,6 +28,10 @@ const router = new Router({
       meta: {
         showToolBar: true,
         showFooter: true
+      },
+      beforeEnter: async (to, from, next) => {
+        await loggedIn();
+        next();
       }
     },
     {
@@ -24,6 +41,12 @@ const router = new Router({
       meta: {
         showToolBar: false,
         showFooter: false
+      },
+      beforeEnter: async (to, from, next) => {
+        if (await loggedIn()) {
+          return next("/");
+        }
+        next();
       }
     },
     {
@@ -33,6 +56,22 @@ const router = new Router({
       meta: {
         showToolBar: false,
         showFooter: false
+      },
+      beforeEnter: async (to, from, next) => {
+        if (await loggedIn()) {
+          return next("/");
+        }
+        next();
+      }
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () => import("@/views/Profile.vue"),
+      meta: {
+        showToolBar: true,
+        showFooter: true,
+        requiresAuth: true
       }
     },
     {
@@ -41,7 +80,8 @@ const router = new Router({
       component: () => import("@/views/RestaurantDisplay.vue"),
       meta: {
         showToolBar: true,
-        showFooter: true
+        showFooter: true,
+        requiresAuth: true
       }
     },
     {
@@ -50,7 +90,8 @@ const router = new Router({
       component: () => import("@/views/Matching.vue"),
       meta: {
         showToolBar: true,
-        showFooter: true
+        showFooter: true,
+        requiresAuth: true
       }
     },
     {
@@ -59,12 +100,31 @@ const router = new Router({
       component: () => import("@/views/Chatroom.vue"),
       meta: {
         showToolBar: true,
-        showFooter: true
+        showFooter: true,
+        requiresAuth: true
       }
     }
   ]
 });
-
+router.beforeEach(async (to, from, next) => {
+  if (to.path === "/") next();
+  else {
+    let stateLoggedIn = store.state.loggedIn;
+    const expiryTime = store.state.expiryTime;
+    if (stateLoggedIn && expiryTime > Math.floor(Date.now() / 1000)) {
+      if (to.path !== "/login" && to.path !== "/sign_up") next();
+      else next("/matching");
+    } else if (await loggedIn()) {
+      if (to.path !== "/login" && to.path !== "/sign_up") next();
+    } else {
+      if (to.path === "/login" || to.path === "/sign_up") next();
+      else if (expiryTime <= Math.floor(Date.now() / 1000)) {
+        alert("Session expired!");
+      }
+      store.commit("logout");
+    }
+  }
+});
 router.beforeResolve((to, from, next) => {
   try {
     let showToolBar = to.matched
@@ -83,5 +143,4 @@ router.beforeResolve((to, from, next) => {
   } catch (error) {}
   next();
 });
-
 export default router;

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
+import "@fortawesome/fontawesome-free/css/all.css"; // Ensure you are using css-loader
 
 Vue.use(Vuetify);
 
@@ -7,10 +8,13 @@ export default new Vuetify({
   theme: {
     themes: {
       light: {
-        primary: "#CBAA5C",
-        secondary: "#083759"
+        primary: "#FFB6D0",
+        secondary: "#95818D",
+        tertiary: "#576066"
       }
     }
   },
-  iconfont: "mdi"
+  icons: {
+    iconfont: "fa" // default - only for display purposes
+  }
 });

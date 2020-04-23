@@ -1,152 +1,172 @@
 <template>
   <v-row no-gutters>
     <v-col
-      v-for='n in 5'
-      :key='n'
-      cols='12'
-      sm='4'
-      
+      v-for="object in listOfRequest"
+      :key="object.requestID"
+      cols="12"
+      sm="4"
     >
-      <v-card
-        class="ma-3"
-        centered
-      >
-      
+      <v-card class="ma-3" centered min-height="500px">
         <v-img
+          v-if="object.stateVegetarian == 1"
           class="white--text align-end dark"
           height="200px"
-          src="@/assets/matching_photo/meat_meal.jpg"
+          src="@/assets/matching_photo/cuhk_veggie_can.jpg"
           gradient="to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.4)"
         >
-          <v-card-title >Request name :)</v-card-title>
-          
+          <v-card-title>{{ object.requestName }}</v-card-title>
         </v-img>
 
-        <v-card-text class="black--text subtitle-1 py-0 pt-3">Med Can - 13:00 - 04/04/2020</v-card-text>
+        <v-img
+          v-else
+          class="white--text align-end dark"
+          height="200px"
+          src="@/assets/matching_photo/meal_1.jpg"
+          gradient="to bottom, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.4)"
+        >
+          <v-card-title>{{ object.requestName }}</v-card-title>
+        </v-img>
 
-        <v-card-text class="text--primary ">
-          <div>Hi. I like coding and making friends. Let's eat and get to know each other :)</div>
-    
+        <v-card-text pa-3>
+          <div class="subtitle-1 py-0 black--text">
+            Request number: {{ object.requestID }}
+          </div>
+          <div class="subtitle-1 py-0">Location: {{ object.location }}</div>
+          <div class="subtitle-1 py-0">
+            Date: {{ object.date.slice(0, 10) }}
+          </div>
+          <div class="subtitle-1 py-0">
+            Time: {{ object.startingTime.slice(0, 5) }} -
+            {{ object.endingTime.slice(0, 5) }}
+          </div>
+          <div class="subtitle-1 py-0">Major: {{ object.major }}</div>
+          <div class="subtitle-1 py-0">Year: {{ object.year }}</div>
+          <div class="subtitle-1 py-0" style="word-break: break-all;">
+            {{ object.selfIntro }}
+          </div>
         </v-card-text>
 
         <v-card-actions>
-          <v-dialog v-model="explore" persistent max-width="500">
-            <template v-slot:activator="{ on }">
-              <v-btn
-                color="orange"
-                text
-                v-on="on"
-              >
-                Explore
-              </v-btn>
-            </template>
+          <v-btn
+            v-if="object.createUser != $store.state.user.username"
+            style="position: absolute; bottom:   0;"
+            color="primary"
+            text
+            @click="openDialog(object)"
+            >Send Invitation</v-btn
+          >
+          <v-dialog v-model="send" persistent max-width="500">
             <v-card>
-              <v-card-title class="headline">Request name :)</v-card-title>
-              <v-card-text class = "subtitle-1 py-0">Location: Med Can</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Date: 01/04/2020</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Time: 13:00</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Major: Computer Science</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Year: 3</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Self introduction:</v-card-text>
-              <v-card-text class = "subtitle-1 py-0">Hi. I like coding and making friends. Let's eat and get to know each other :)</v-card-text>
-              
+              <v-card-title class="headline"
+                >Are you sure to send an invitation?</v-card-title
+              >
+              <v-card-text
+                >You can't delete your invitation after the invitation has been
+                accepted.</v-card-text
+              >
+
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="explore = false">Go Back</v-btn>
-                <v-dialog v-model="send" persistent max-width="500">
-                  <template v-slot:activator="{ on }">
-                    <v-btn 
-                      color="green darken-1" 
-                      text 
-                      v-on="on"
-                    >
-                      Send Invitation
-                    </v-btn>
-                  </template>
-                  <v-card>
-                    <v-card-title>
-                      <span class="headline">Send Invitation</span>
-                    </v-card-title>
-                    <v-card-text>
-                      <v-container>
-                        <v-row>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field label="Legal first name*" required></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field label="Legal middle name" hint="example of helper text only on focus"></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6" md="4">
-                            <v-text-field
-                              label="Legal last name*"
-                              hint="example of persistent helper text"
-                              persistent-hint
-                              required
-                            ></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field label="Email*" required></v-text-field>
-                          </v-col>
-                          <v-col cols="12">
-                            <v-text-field label="Password*" type="password" required></v-text-field>
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <v-select
-                              :items="['0-17', '18-29', '30-54', '54+']"
-                              label="Age*"
-                              required
-                            ></v-select>
-                          </v-col>
-                          <v-col cols="12" sm="6">
-                            <v-autocomplete
-                              :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"
-                              label="Interests"
-                              multiple
-                            ></v-autocomplete>
-                          </v-col>
-                        </v-row>
-                      </v-container>
-                      <small>*indicates required field</small>
-                    </v-card-text>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn color="blue darken-1" text @click="send = false">Go Back</v-btn>
-                      <v-btn color="blue darken-1" text @click="send = false">Send</v-btn>
-                    </v-card-actions>
-                  </v-card>
-                </v-dialog>
+                <v-btn color="secondary" text @click="send = false"
+                  >Go back</v-btn
+                >
+                <v-btn color="primary" text @click="insertInvite()">Yes</v-btn>
               </v-card-actions>
             </v-card>
           </v-dialog>
-
         </v-card-actions>
-      
+        <v-snackbar
+          color="secondary"
+          v-model="snackbar"
+          :multi-line="multiLine"
+          :timeout="2500"
+          top
+        >
+          Your invitation has been sent!
+          <v-btn text color="white" @click="snackbar = false"
+            >Close</v-btn
+          >
+        </v-snackbar>
       </v-card>
     </v-col>
   </v-row>
-
 </template>
 
 <script>
+import { service } from "@/plugins/request_service";
+import moment from "moment-timezone";
+
 export default {
   data: () => ({
-    explore: false,
+    multiLine: true,
+    snackbar: false,
     send: false,
-
+    listOfRequest: [],
+    meals: [
+      "@/assets/matching_photo/meal_1.jpg",
+      "@/assets/matching_photo/meal_2.jpg",
+      "@/assets/matching_photo/meal_3.jpg",
+      "@/assets/matching_photo/meal_4.jpg",
+      "@/assets/matching_photo/meal_5.jpg",
+      "@/assets/matching_photo/meal_6.jpg"
+    ],
+    selectedimg: null,
+    selectedRequestID: null
   }),
   mounted() {
-
+    this.getListOfRequest();
+  },
+  created() {
+    this.selectedimg = this.randomItem(this.meals);
   },
   methods: {
-    getData() {
-      service.get("/test/knexTest").then(res => {
-        console.log(res);
+    randomItem(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    },
+    getListOfRequest() {
+      service.get("/matching/requestlist").then(res => {
         if (res.data.success) {
-          this.data = res.data.data;
+          let temp = res.data.data;
+          this.listOfRequest = temp.map(
+            s =>
+              (s = {
+                requestID: s.requestID,
+                createUser: s.createUser,
+                requestName: s.requestName,
+                location: s.location,
+                date: moment(s.date)
+                  .tz("Asia/Hong_Kong")
+                  .format("YYYY-MM-DD"),
+                startingTime: s.startingTime,
+                endingTime: s.endingTime,
+                major: s.major,
+                year: s.year,
+                selfIntro: s.selfIntro,
+                stateVegetarian: s.stateVegetarian
+                //requestName, location, date, startingTime, endingTime, major, year, selfIntro, stateVegetarian
+              })
+          );
+          //   date = moment(date).format("YYYY-MM-DD HH:mm:ss");
         }
       });
     },
+    openDialog(object) {
+      this.send = true;
+      this.selectedRequestID = object.requestID;
+    },
+    insertInvite() {
+      service
+        .post("/matching/sendInvitation", {
+          requestID: this.selectedRequestID,
+          inviteUser: this.$store.state.user.username
+        })
+        .then(res => {
+          if (res.data.success) {
+            this.send = false;
+            this.snackbar = true;
+          }
+        });
+    }
   }
-}
+};
 </script>
-  

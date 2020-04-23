@@ -1,105 +1,159 @@
 <template>
   <v-container fluid>
     <v-layout align-center justify-center>
-      <v-card>
-        <v-img
-          class="white--text"
-          height="200px"
-          :src="require('@/assets/sign_up_cover_photo/sign_up_cover.jpg')"
-        >
-          <v-container fill-height fluid>
-            <v-layout fill-height>
-              <v-flex xs12 align-end flexbox> </v-flex>
+      <v-flex xs10>
+        <v-card>
+          <v-img
+            class="white--text"
+            height="200px"
+            :src="require('@/assets/sign_up_cover_photo/sign_up_cover.jpg')"
+          >
+            <v-container fill-height fluid>
+              <v-layout fill-height>
+                <v-flex xs12 align-end flexbox> </v-flex>
+              </v-layout>
+            </v-container>
+          </v-img>
+
+          <h1 style="margin-left: 0.5em" class="font-weight-light">Sign Up</h1>
+          <v-card-text>
+            <v-layout row wrap>
+              <v-flex xs12 md6>
+                <v-form ref="form" v-model="valid" :lazy-validation="lazy">
+                  <div class="red--text">{{ errMsg }}</div>
+                  <v-text-field
+                    v-model="name"
+                    :counter="10"
+                    :rules="nameRules"
+                    label="Name"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    :counter="6"
+                    label="Password"
+                    type="password"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="displayName"
+                    :rules="displayNameRules"
+                    label="Display Name"
+                    required
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="major"
+                    :rules="majorRules"
+                    label="Major"
+                    required
+                  ></v-text-field>
+
+                  <v-select
+                    :items="labels"
+                    :value="collegeSelected"
+                    :input-value="collegeSelected"
+                    :v-model="collegeSelected"
+                    item-text="name"
+                    item-value="name"
+                    :rules="[v => !!v || 'College is required']"
+                    label="College"
+                    required
+                    autocomplete
+                    return-object
+                  >
+                    <template slot="selection" slot-scope="data">
+                      <v-chip
+                        :input-value="data.selected"
+                        close
+                        class="chip--select-multi"
+                        @input="data.parent.selectItem(data.item)"
+                      >
+                        {{ data.item.name }}
+                        {{ inputCollege(data.item.name) }}
+                      </v-chip>
+                    </template>
+                  </v-select>
+
+                  <v-text-field
+                    v-model="year"
+                    :rules="yearRules"
+                    label="Year"
+                    required
+                  ></v-text-field>
+
+                  <v-text-field
+                    v-model="selfIntro"
+                    :rules="selfIntroRules"
+                    label="Self-Introduction"
+                    required
+                  ></v-text-field>
+
+                  <v-checkbox
+                    v-model="checkbox"
+                    :rules="[v => !!v || 'You must agree to continue!']"
+                    label="Confirm all your information is correct"
+                    required
+                  ></v-checkbox>
+                </v-form>
+              </v-flex>
             </v-layout>
-          </v-container>
-        </v-img>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text :to="'/'">Return To Home</v-btn>
 
-        <v-card-title class="display-1 font-weight-light">Sign Up</v-card-title>
-        <v-card-text>
-          <v-flex xs12 md6>
-            <v-form ref="form" v-model="valid" lazy-validation>
-              <v-text-field
-                v-model="name"
-                :counter="10"
-                :rules="nameRules"
-                label="Name"
-                required
-              ></v-text-field>
+            <v-btn
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              @click="submitData"
+              >Submit
+            </v-btn>
 
-              <v-text-field
-                v-model="password"
-                :rules="passwordRules"
-                :counter="6"
-                label="Password"
-                type="password"
-              ></v-text-field>
-
-              <v-text-field
-                v-model="email"
-                :rules="emailRules"
-                label="E-mail"
-                required
-              ></v-text-field>
-
-              <v-text-field
-                v-model="major"
-                :rules="majorRules"
-                label="Major"
-                required
-              ></v-text-field>
-
-              <v-select
-                v-model="select"
-                :items="college"
-                :rules="[v => !!v || 'College is required']"
-                label="College"
-                required
-              ></v-select>
-
-              <v-text-field v-model="Bio" label="Bio" required></v-text-field>
-
-              <v-checkbox
-                v-model="checkbox"
-                :rules="[v => !!v || 'You must agree to continue!']"
-                label="Confirm all your information is correct"
-                required
-              ></v-checkbox>
-              <v-row>
-                <v-spacer></v-spacer>
-                <v-btn :disabled="!valid" color="primary" @click="validate">
-                  Validate
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn color="error" @click="reset">
-                  Reset Form
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn color="warning" @click="resetValidation">
-                  Reset Validation
-                </v-btn>
-                <v-spacer></v-spacer>
-              </v-row>
-            </v-form>
-          </v-flex>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn flat>Cancel</v-btn>
-          <v-btn flat color="primary">Submit</v-btn>
-        </v-card-actions>
-      </v-card>
+            <v-snackbar v-model="finished">
+              {{ finishedMsg }}
+              <v-btn color="pink" text @click="finished = false">Close</v-btn>
+            </v-snackbar>
+          </v-card-actions>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script>
+import { service } from "@/plugins/request_service";
+import router from "../../node_modules/vue-router";
 export default {
   data: () => ({
-    valid: true,
+    data: "",
+    valid: false,
+    lazy: false,
     name: "",
+    chip: true,
+    labels: [
+      { name: "Chung Chi College" },
+      { name: "New Asia College" },
+      { name: "United College" },
+      { name: "Shaw College" },
+      { name: "Lee Woo Sing College" },
+      { name: "Wu Yee Sun College" },
+      { name: "S.H. Ho College" },
+      { name: "CW Chu College" },
+      { name: "Morningside College" }
+    ],
     nameRules: [
       v => !!v || "Name is required",
-      v => (v && v.length <= 10) || "Name must be less than 10 characters"
+      v => (v && v.length <= 15) || "Name must be less than 15 characters"
     ],
     email: "",
     emailRules: [
@@ -109,31 +163,51 @@ export default {
     major: "",
     majorRules: [v => !!v || "Major is required"],
 
+    displayName: "",
+    displayNameRules: [v => !!v || "Ur display name is required"],
+
     password: "",
     passwordRules: [
       v =>
         (v || "").match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
         "Password must contain an upper case letter, a numeric character, and a special character",
-      v => (v && v.length >= 6) || "Password must be More than 6 characters",
+      v => (v && v.length >= 6) || "Password must be at least 6 characters",
       v => !!v || "Password is required"
+    ],
+
+    selfIntro: "",
+    selfIntroRules: [v => !!v || "Self-Introduction is required"],
+
+    year: "",
+    yearRules: [
+      v => (v || "").match(/^[0-9]*[1-9][0-9]*$/) || "year is required"
     ],
 
     select: null,
     college: [
-      "CC",
-      "NA",
-      "UC",
-      "Shaw",
-      "WS",
-      "WYS",
-      "SHHo",
-      "CWChu",
-      "Morningside"
+      "Chung Chi College",
+      "New Asia College",
+      "United College",
+      "Shaw College",
+      "Lee Woo Sing College",
+      "Wu Yee Sun College",
+      "S.H. Ho College",
+      "CW Chu College",
+      "Morningside College"
     ],
-    checkbox: false
+    collegeSelected: "",
+    checkbox: false,
+    finished: false,
+    validateSubmit: false,
+    finishedMsg:
+      "You have finished SignUp Procedure,You can press Return to Home to leave!",
+    errMsg: ""
   }),
-
+  mounted() {},
   methods: {
+    inputCollege(input) {
+      this.collegeSelected = input;
+    },
     validate() {
       if (this.$refs.form.validate()) {
         this.snackbar = true;
@@ -144,6 +218,51 @@ export default {
     },
     resetValidation() {
       this.$refs.form.resetValidation();
+    },
+    validateInfo() {
+      // not use
+      if (
+        this.name == "" ||
+        this.password == "" ||
+        this.displayName == "" ||
+        this.major == "" ||
+        this.year == "" ||
+        this.college == "" ||
+        this.selfIntro == ""
+      ) {
+        alert("you have not complete on writing your information");
+        return 0;
+      }
+    },
+    submitData() {
+      service
+        .post("/auth/signUp", {
+          username: this.name,
+          password: this.password,
+          email: this.email,
+          displayName: this.displayName,
+          major: this.major,
+          year: this.year,
+          college: this.collegeSelected,
+          selfIntro: this.selfIntro
+        })
+        .then(res => {
+          if (res.data.success) {
+            console.log("Update to database success!");
+            this.finished = true;
+            this.$router.push("/");
+          } else {
+            console.log("Update to database failed!");
+          }
+        })
+        .catch(err => {
+          this.errMsg = "Username already taken!";
+        });
+    }
+  },
+  watch: {
+    name() {
+      this.errMsg = "";
     }
   }
 };

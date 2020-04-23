@@ -3,20 +3,16 @@ const knex = require("knex")(require("../../knexfile.js")["development"]);
 
 module.exports = {
   socket: {
-    joinRoom: async function(data, socket, io) {
+    joinRoom: async function (data, socket, io) {
       // markdown the current online user
       if (currUser[data.username] != undefined) {
         socket.leave(currUser[data.username]["roomID"]);
-        io.to(currUser[data.username]["roomID"]).emit(
-          "leaveRoom",
-          `${currUser[data.username]["username"]} leave the room\n`
-        );
       }
       currUser[data.username] = {
         username: data.username,
-        roomID: data.roomID
+        roomID: data.roomID,
+        socketId: socket.id,
       };
-
       // join the room
       socket.join(currUser[data.username]["roomID"]);
 
@@ -27,21 +23,21 @@ module.exports = {
         boardMsg += `${msgRecord[i].linetxt}`;
       }
       // emit signal to front-end to get the history
-      io.to(currUser[data.username]["roomID"]).emit("getHistory", boardMsg);
+      io.to(currUser[data.username]["socketId"]).emit("getHistory", boardMsg);
     },
-    sendMsg: function(data, msg, io) {
+    sendMsg: function (data, msg, io) {
       // emit signal to front-end to get the message
       let boardMsg = `${currUser[data.username]["username"]}: ${msg}\n`;
       console.log(boardMsg);
       this.recordMsg(currUser[data.username]["roomID"], boardMsg);
       io.to(currUser[data.username]["roomID"]).emit("receiveMsg", boardMsg);
     },
-    disconnect: function(data, socket) {
+    disconnect: function (data, socket) {
       delete currUser[data.username];
       console.log(currUser);
       socket.disconnect(true);
     },
-    getMsgRecord: async function(roomID) {
+    getMsgRecord: async function (roomID) {
       let result = await knex.raw(
         `
           SELECT linetxt, created_at
@@ -53,7 +49,7 @@ module.exports = {
       result = result[0];
       return result;
     },
-    recordMsg: async function(roomID, msg) {
+    recordMsg: async function (roomID, msg) {
       await knex.raw(
         `
           INSERT INTO chatroom_history(roomID, linetxt)
@@ -61,12 +57,12 @@ module.exports = {
         `,
         [roomID, msg]
       );
-    }
+    },
   },
-  getListofRoom: async function(username) {
+  getListofRoom: async function (username) {
     let result = await knex.raw(
       `
-        SELECT roomID, username_A, username_B
+        SELECT roomID, username_A, username_B, requestID
         FROM chatroom_pair
         WHERE username_A = ?
         OR username_B = ?
@@ -75,5 +71,12 @@ module.exports = {
     );
     result = result[0];
     return result;
-  }
+  },
+  getDateDetail: async function (requestID) {
+    let result = await knex("request")
+      .select("*")
+      .where({ requestID: requestID });
+    result = result[0];
+    return result;
+  },
 };

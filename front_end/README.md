@@ -1,34 +1,21 @@
-# csci3100-project(front-end)
+## CSCI3100 Project - RiceLeg Front End
 
-> A Vue.js project
+**CSCI3100 Software Enigeering (Spring 2020) Group Project: RiceLeg**
 
-**student**
+This software is created by the CSCI3100 students who studied in 2020 semester 2. We are _Group 27_ and this program is the front end of our application.
 
-> Yue Ka Long <SID: 1155110560>
+**Team Member**
 
-> Wong Kin Chi <SID: 1155109665>
+- Yue Ka Long <SID: 1155110560>
+- Wong Kin Chi <SID: 1155109665>
+- Tu Chen Hsien <SID: 1155108479>
+- Lam Hiu Lui <SID: 1155109098>
+- Lau Ping Tung <SID: 1155111034>
 
-> Tu Chen Hsien <SID: 1155108479>
+**Build Set Up**
 
-> Lam Hiu Lui <SID: 1155109098>
+> 1. This front end makes use of vue.js, and we controll all the node modules by using Yarn, so first please install node.js and yarn first.
 >
-> Lau Ping Tung  <SID:1155111034>
-
-## Build Setup
-
--please install node.js and use npm install yarn !
-
-```bash
-# install dependencies
-yarn install
-# serve with hot reload at localhost:8080 **mostly use**
-yarn serve
-
-
-#actually no use for us
-# build for production with minification
-yarn build
-
-# build for production and view the bundle analyzer report
-yarn build --report
-```
+> 2. To build up the same testing enviroment, first enter `yarn install` in terminal to download all the node modules.
+>
+> 3. Last step, to start the front end, please enter `yarn serve` to start it. It will using the port 8080 as default.

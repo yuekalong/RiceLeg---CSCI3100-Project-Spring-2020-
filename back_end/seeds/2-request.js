@@ -3,7 +3,7 @@ exports.seed = function(knex) {
     // Deletes ALL existing entries
     return knex('request').del()
       .then(function () {
-        // Inserts seed entries
+        // Inserts seed entries - requests
         return knex('request').insert([
             {
                 requestID: 1,

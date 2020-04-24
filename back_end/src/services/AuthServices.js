@@ -1,7 +1,7 @@
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 const bcrypt = require("bcrypt");
 
-module.exports = {
+module.exports = {    // insert new user information into database (account)
   signUp: async function (newUser) {
     return await knex("account").insert({
       username: newUser.username,
@@ -18,7 +18,6 @@ module.exports = {
     return await knex("account").select("*").where("username", "=", username);
   },
   updateProfile: async function (obj) {
-    // for checking entered old password correct or not
     let password = await knex.raw(
       `
       SELECT password FROM account WHERE username = ?;
@@ -26,14 +25,13 @@ module.exports = {
       [obj.username]
     );
     password = password[0][0].password;
-    if (obj.oldpw != undefined) {
-      if (!(await bcrypt.compare(obj.oldpw, password))) {
+    if (obj.oldpw != undefined) {     // change password request with obj.oldpw not undefined
+      if (!(await bcrypt.compare(obj.oldpw, password))) {   // for checking entered old password correct or not
         throw "invalid old password";
       }
     }
-
-    obj.password = await bcrypt.hash(obj.password, 10);
-    await knex.raw(
+    obj.password = await bcrypt.hash(obj.password, 10);   // encrypt password
+    await knex.raw(   // updating profile with the passed object of the new information
       `
       UPDATE account SET password = ?, displayName = ?, email = ?, year = ?, major = ?, college = ?, selfIntro = ?
       WHERE username = ?;
@@ -50,8 +48,5 @@ module.exports = {
       ]
     );
     return;
-
-    // obj.password = await bcrypt.hash(obj.password, 10)
-    // obj.password = await bcrypt.hash(obj.password, 10)
   },
 };

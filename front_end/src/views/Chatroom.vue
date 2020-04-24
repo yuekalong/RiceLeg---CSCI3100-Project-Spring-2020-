@@ -64,33 +64,19 @@
             outlined
             v-on:keyup.enter="sendMsg"
           />
-          <v-btn
-            v-if="loaded"
-            :disabled="!haveRoom"
-            class="secondary"
-            @click="sendMsg"
-            >Send</v-btn
-          >
+          <v-btn v-if="loaded" :disabled="!haveRoom" class="secondary" @click="sendMsg">Send</v-btn>
         </v-card-text>
       </v-card>
       <v-dialog v-model="dialog" max-width="50%">
         <v-card centered height="100%" style="text-align:center;">
-          <v-card-title class="headline justify-center primary--text"
-            >Date Detail</v-card-title
-          >
+          <v-card-title class="headline justify-center primary--text">Date Detail</v-card-title>
           <v-card-text pa-3>
-            <div class="display-1 py-0 secondary--text font-weight-bold">
-              {{ date.requestName }}
-            </div>
-            <div class="subtitle-1 py-0 secondary--text">
-              #{{ date.requestID }}
-            </div>
-            <div class="headline py-0 secondary--text font-weight-medium">
-              {{ date.location }}
-            </div>
-            <div class="headline py-0 secondary--text font-weight-medium">
-              {{ date.date.slice(0, 10) }}
-            </div>
+            <div class="display-1 py-0 secondary--text font-weight-bold">{{ date.requestName }}</div>
+            <div class="subtitle-1 py-0 secondary--text">#{{ date.requestID }}</div>
+            <div class="headline py-0 secondary--text font-weight-medium">{{ date.location }}</div>
+            <div
+              class="headline py-0 secondary--text font-weight-medium"
+            >{{ date.date.slice(0, 10) }}</div>
             <div class="headline py-0 secondary--text font-weight-medium">
               {{ date.startingTime.slice(0, 5) }} -
               {{ date.endingTime.slice(0, 5) }}

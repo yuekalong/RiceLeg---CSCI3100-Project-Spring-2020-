@@ -19,23 +19,16 @@
           </v-row>
         </v-parallax>
       </v-app>
-      <!-- <banner
-        :src="require('@/assets/banner_photo/home_page.jpg')"
-        :title="'RICELEG'"
-        :subheading="'Modern solution to socialize through meals in CUHK'"
-      /> -->
       <v-card height="400" flat></v-card>
       <about />
     </v-container>
   </div>
 </template>
-
 <script>
 export default {
   name: "Home",
   components: {
     About: () => import("@/components/home/About")
-    // Banner: () => import('@/components/home/Banner')
   },
   mounted() {
     document.getElementById("homepage").style.height = "100vh";

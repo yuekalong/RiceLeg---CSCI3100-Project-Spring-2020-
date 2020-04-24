@@ -15,6 +15,7 @@
           style="text-align:center;"
         ></v-progress-circular>
         <v-card-text class="white">
+          <!-- Below will display current user profile details -->
           <v-container>
             <v-card-text class="title pb-0"
               >Username: {{ user.username }}</v-card-text
@@ -26,6 +27,7 @@
                 >
               </v-col>
               <v-col>
+                <!-- User can change display name -->
                 <v-btn class="pb-0" @click="changedn = true"
                   >Change display name</v-btn
                 >
@@ -44,7 +46,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="secondary" text @click="changedn = false"
+                      <v-btn color="secondary" text @click="changedn = false; newdn = null"
                         >Go back</v-btn
                       >
                       <v-btn color="primary" text @click="updateProfile()"
@@ -62,6 +64,7 @@
                 >
               </v-col>
               <v-col>
+                <!-- User can change password by entering old password and new password twice -->
                 <v-btn class="pb-0" @click="changepw = true"
                   >Change password</v-btn
                 >
@@ -98,6 +101,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
+                      <!-- User can click on the eye icon to make password visible -->
                       <v-btn
                         type="password"
                         @click="switchVisibility"
@@ -106,7 +110,7 @@
                       >
                         <v-icon>fas fa-eye</v-icon>
                       </v-btn>
-                      <v-btn color="secondary" text @click="changepw = false"
+                      <v-btn color="secondary" text @click="changepw = false; oldpw = null; newpw = null; repw = null"
                         >Go back</v-btn
                       >
                       <v-btn color="primary" text @click="updateProfile()"
@@ -134,6 +138,7 @@
                 >
               </v-col>
               <v-col>
+                <!-- User can change self introduction -->
                 <v-btn class="pb-0" @click="changesi = true"
                   >Change self introduction</v-btn
                 >
@@ -154,7 +159,7 @@
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="secondary" text @click="changesi = false"
+                      <v-btn color="secondary" text @click="changesi = false; newsi = null"
                         >Go back</v-btn
                       >
                       <v-btn color="primary" text @click="updateProfile()"
@@ -165,6 +170,7 @@
                 </v-dialog>
               </v-col>
             </v-row>
+            <!-- Warning notification for invalid password changing request -->
             <v-snackbar
               v-model="snackbar"
               :multi-line="multiLine"
@@ -176,7 +182,18 @@
               <br />(Wrong old password/ non-matching new passwords)
               <v-btn text color="white" @click="snackbar = false">Close</v-btn>
             </v-snackbar>
-
+            <!-- Warning notification for invalid self introduction -->
+            <v-snackbar
+              v-model="snackbar_si"
+              :multi-line="multiLine"
+              :timeout="5000"
+              top
+              color="secondary"
+            >
+              Invalid self introduction!
+              <v-btn text color="white" @click="snackbar = false">Close</v-btn>
+            </v-snackbar>
+            <!-- Reminder notification for user to complete the form -->
             <v-snackbar
               v-model="reminder"
               :multi-line="multiLine"
@@ -187,6 +204,7 @@
               Please complete the form!
               <v-btn text color="white" @click="success = false">Close</v-btn>
             </v-snackbar>
+            <!-- Confirmation notification for user to know their information has been saved -->
             <v-snackbar
               v-model="success"
               :multi-line="multiLine"
@@ -197,18 +215,14 @@
               Your information has been saved!
               <v-btn text color="white" @click="success = false">Close</v-btn>
             </v-snackbar>
-
-            <!-- <v-text-field v-model="user.password" label="Password" outlined shaped></v-text-field> -->
           </v-container>
         </v-card-text>
       </v-card>
     </v-container>
   </div>
 </template>
-
 <script>
 import { service } from "@/plugins/request_service";
-
 export default {
   name: "Profile",
   data: () => ({
@@ -229,14 +243,14 @@ export default {
     snackbar: false,
     reminder: false,
     passwordFieldType: "password",
-    passwordRules: [
+    passwordRules: [    // password requirements
       v =>
         (v || "").match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
         "Password must contain an upper case letter, a numeric character, and a special character",
       v => (v && v.length > 6) || "Password must be More than 6 characters",
       v => !!v || "Password is required"
     ],
-    selfIntroRules: [v => (v && v.length <= 70) || "Maximimum 70 characters"],
+    selfIntroRules: [v => (v && v.length <= 70) || "Maximimum 70 characters"],    // self introduction requirement
     success: false,
     multiLine: true,
     newpw: null,
@@ -259,21 +273,18 @@ export default {
           }
         });
     },
-    switchVisibility() {
+    switchVisibility() {    // allow passwords to be seen or censored
       this.passwordFieldType =
         this.passwordFieldType === "password" ? "text" : "password";
     },
     updateProfile() {
       console.log(this.newdn);
-      if (this.newpw !== this.repw) {
-        // new password not the same as reentered new password
+      if (this.newpw !== this.repw) {   // new password not the same as reentered new password
         this.snackbar = true;
         return;
       }
-      if (this.changedn === true) {
-        // change display name
-        if (this.newdn === null) {
-          // empty field in change display name
+      if (this.changedn === true) {   // change display name
+        if (this.newdn === null) {    // empty field in change display name
           this.reminder = true;
           return;
         } else {
@@ -281,42 +292,42 @@ export default {
           this.user.displayName = this.newdn;
         }
       }
-      if (this.changepw === true) {
-        // change password
-        if (this.newpw === null || this.repw === null || this.oldpw === null) {
-          // empty field in change password
+      if (this.changepw === true) {   // change password
+        if (this.newpw === null || this.repw === null || this.oldpw === null) {   // empty field in change password
           this.reminder = true;
           return;
         } else {
+          var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
+          if (this.user.password.match(reg) == null) {    // make sure entered passwords fullfill password requirements
+            this.newpw = null;
+            this.newdn = null;
+            this.newsi = null;
+            this.repw = null;
+            this.oldpw = null;
+            this.snackbar = true;
+            return;
+          }
           this.changepw = false;
           this.user.password = this.newpw;
         }
       }
-      if (this.changesi === true) {
-        // change self intro
-        if (this.newsi === null) {
-          // empty field in change self intro
+      if (this.changesi === true) {   // change self intro
+        if (this.newsi === null) {    // empty field in change self intro
           this.reminder = true;
           return;
         } else {
+          var regsi = /^.{1,70}$/;
+          if (this.newsi.match(regsi) == null) {    // make sure entered self introduction is under 70 characters
+            this.newsi = null;
+            this.snackbar_si = true;
+            return;
+          }
           this.changesi = false;
           this.user.selfIntro = this.newsi;
         }
       }
-
-      var reg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/;
-      if (this.user.password.match(reg) == null) {
-        this.newpw = null;
-        this.newdn = null;
-        this.newsi = null;
-        this.repw = null;
-        this.oldpw = null;
-        this.snackbar = true;
-        return;
-      }
-
       service
-        .put("/auth/updateProfile", {
+        .put("/auth/updateProfile", {   // fetch current user information
           username: this.user.username,
           password: this.user.password,
           displayName: this.user.displayName,
@@ -333,7 +344,7 @@ export default {
             this.success = true;
           }
         })
-        .catch(err => {
+        .catch(err => {   // catch error from changing password due to not matching old password
           this.newpw = null;
           this.newdn = null;
           this.newsi = null;

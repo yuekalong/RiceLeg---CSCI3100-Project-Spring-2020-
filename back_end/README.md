@@ -18,6 +18,8 @@ This software is created by the CSCI3100 students who studied in 2020 semester 2
 >
 > 2. According to our set up, we use MySQL database (version 8.0.12) on port 3306 and we use root user and password is "1234" for our development. For better user experience, please set up like our development enviroment. Or you can simply edit the `knexfile.js` file to change the configuration.
 >
-> 3. To build up the same testing enviroment, first enter `yarn install` in terminal to download all the node modules, then enter `yarn knex migrate:latest` to sync up the tables in the database.
+> 3. To build up the same testing enviroment, first enter `yarn install` in terminal to download all the node modules, then enter `yarn knex migrate:latest` to sync up the tables in the database. And then run `yarn knex seed:run` to run the seeds.
 >
-> 4. Last step, to start the back end, please enter `yarn dev` to start it. It will using the port 3000 as default.
+> 4. To start the back end, please enter `yarn dev` to start it. It will using the port 3000 as default.
+>
+> 5. Log-in with `username: long/ harry/ arthur/ jane/ charlie` with `password: 1234aA!`

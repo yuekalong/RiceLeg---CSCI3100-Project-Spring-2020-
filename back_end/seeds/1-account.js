@@ -1,7 +1,9 @@
 exports.seed = async function (knex, Promise) {
   // Deletes ALL existing entries
   await knex("account").del();
-
+  // Account seeds for testing
+  // All accounts same password: 1234aA!
+  // Account usernames: long, jane, harry, arthur, charlie
   const accounts = [
     {
       username: "long",

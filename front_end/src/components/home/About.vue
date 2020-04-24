@@ -47,56 +47,11 @@
           height="500"
           width="100%"
           max-width="500"
-          @click="backHome()"
+          @click="$vuetify.goTo(0)"
         />
         <v-spacer></v-spacer>
       </v-row>
     </v-card>
     <v-card height="100" flat></v-card>
-    <!-- <v-container> -->
-    <!-- <div
-        style="
-        height:4em; 
-        background-color: #576066;
-        position: relative;
-        left: calc(-50vw + 55%);
-        width: 120em;
-        display: table-cell;
-        vertical-align: middle;
-        box-shadow: 0.2em 0.2em 0.2em grey;
-        "
-      > -->
-    <!-- <base-subheading
-          class="display-1"
-          style="text-indent: 1vw; color:white;"
-          >Who are we?</base-subheading
-        >
-      </div> -->
-    <!-- for spacing -->
-    <!-- <p></p> -->
-    <!-- for spacing -->
-    <!-- <p class="title" style="font-weight:300">
-        RiceLeg is a social web application that helps CUHK
-        students to find new friends during meal times.
-      </p> -->
-    <!-- <p class="title" style="font-weight:300">
-        You can match, chat, eat with your new friends.
-      </p> -->
-    <!-- <p class="title" style="font-weight:300">
-        There are restaurant details and ratings of CUHK restaurants.
-      </p> -->
-    <!-- <p class="title" style="font-weight:300">
-        Let's start your experience in RiceLeg.
-      </p> -->
-    <!-- </v-container> -->
   </v-card>
 </template>
-<script>
-export default {
-  methods: {
-    backHome() {
-      this.$router.push("/");
-    }
-  }
-};
-</script>

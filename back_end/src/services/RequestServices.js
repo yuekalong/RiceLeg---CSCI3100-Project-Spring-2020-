@@ -42,7 +42,7 @@ module.exports = {
     );
     return;
   },
-  getListOfRequest: async function () {
+  getListOfRequest: async function () {   // fetch request data from database (request)
     //browse request: showing requests
     const currDate = moment().format("YYYY-MM-DD");
     const currTime = moment().format("HH:mm:ss");

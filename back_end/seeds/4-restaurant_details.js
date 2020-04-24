@@ -3,7 +3,7 @@ exports.seed = function (knex) {
   return knex("restaurant_details")
     .del()
     .then(function () {
-      // Inserts seed entries
+      // Inserts seed entries - restaruant details
       return knex("restaurant_details").insert([
         {
           restaurantName: "Basic Medical Sciences Building Snack Bar",

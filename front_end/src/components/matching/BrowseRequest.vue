@@ -7,8 +7,9 @@
       sm="4"
     >
       <v-card class="ma-3" centered min-height="500px">
+        <!-- Image for vegetarian request -->
         <v-img
-          v-if="object.stateVegetarian == 1"
+          v-if="object.stateVegetarian == 1"    
           class="white--text align-end dark"
           height="200px"
           src="@/assets/matching_photo/cuhk_veggie_can.jpg"
@@ -16,7 +17,7 @@
         >
           <v-card-title>{{ object.requestName }}</v-card-title>
         </v-img>
-
+        <!-- Image for non-vegetarian request -->
         <v-img
           v-else
           class="white--text align-end dark"
@@ -26,7 +27,7 @@
         >
           <v-card-title>{{ object.requestName }}</v-card-title>
         </v-img>
-
+        <!-- Structure of a request card -->
         <v-card-text pa-3>
           <div class="subtitle-1 py-0 black--text">
             Request number: {{ object.requestID }}
@@ -45,7 +46,7 @@
             {{ object.selfIntro }}
           </div>
         </v-card-text>
-
+        <!-- Request creator cannot send invitation to himself/herself -->
         <v-card-actions>
           <v-btn
             v-if="object.createUser != $store.state.user.username"
@@ -55,6 +56,7 @@
             @click="openDialog(object)"
             >Send Invitation</v-btn
           >
+          <!-- Pop-up to reconfirm send invitation -->
           <v-dialog v-model="send" persistent max-width="500">
             <v-card>
               <v-card-title class="headline"
@@ -64,7 +66,6 @@
                 >You can't delete your invitation after the invitation has been
                 accepted.</v-card-text
               >
-
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="secondary" text @click="send = false"
@@ -75,6 +76,7 @@
             </v-card>
           </v-dialog>
         </v-card-actions>
+        <!-- Notification for sent invitations -->
         <v-snackbar
           color="secondary"
           v-model="snackbar"
@@ -91,45 +93,28 @@
     </v-col>
   </v-row>
 </template>
-
 <script>
 import { service } from "@/plugins/request_service";
 import moment from "moment-timezone";
-
 export default {
   data: () => ({
     multiLine: true,
     snackbar: false,
     send: false,
     listOfRequest: [],
-    meals: [
-      "@/assets/matching_photo/meal_1.jpg",
-      "@/assets/matching_photo/meal_2.jpg",
-      "@/assets/matching_photo/meal_3.jpg",
-      "@/assets/matching_photo/meal_4.jpg",
-      "@/assets/matching_photo/meal_5.jpg",
-      "@/assets/matching_photo/meal_6.jpg"
-    ],
-    selectedimg: null,
     selectedRequestID: null
   }),
   mounted() {
     this.getListOfRequest();
   },
-  created() {
-    this.selectedimg = this.randomItem(this.meals);
-  },
   methods: {
-    randomItem(items) {
-      return items[Math.floor(Math.random() * items.length)];
-    },
     getListOfRequest() {
       service.get("/matching/requestlist").then(res => {
         if (res.data.success) {
           let temp = res.data.data;
           this.listOfRequest = temp.map(
             s =>
-              (s = {
+              (s = {    // fetching request information from database
                 requestID: s.requestID,
                 createUser: s.createUser,
                 requestName: s.requestName,
@@ -143,18 +128,16 @@ export default {
                 year: s.year,
                 selfIntro: s.selfIntro,
                 stateVegetarian: s.stateVegetarian
-                //requestName, location, date, startingTime, endingTime, major, year, selfIntro, stateVegetarian
               })
           );
-          //   date = moment(date).format("YYYY-MM-DD HH:mm:ss");
         }
       });
     },
-    openDialog(object) {
+    openDialog(object) {  // fetching selected request ID
       this.send = true;
       this.selectedRequestID = object.requestID;
     },
-    insertInvite() {
+    insertInvite() {    // insert invitation row to database
       service
         .post("/matching/sendInvitation", {
           requestID: this.selectedRequestID,

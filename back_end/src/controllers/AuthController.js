@@ -122,7 +122,7 @@ module.exports = {
       next(err);
     }
   },
-  updateProfile: function (req, res, next) {
+  updateProfile: function (req, res, next) {    // defining the object that will be passed to authServices.updateProfile()
     try {
       console.log("AuthController.updateProfile started!");
       obj = {

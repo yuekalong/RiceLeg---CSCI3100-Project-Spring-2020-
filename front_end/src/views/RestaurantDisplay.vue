@@ -23,7 +23,6 @@
             ></v-text-field>
           </v-toolbar>
         </template>
-
         <template v-slot:default="props">
           <v-row>
             <v-col v-for="item in props.items" :key="item.name" cols="12" sm="12" md="6" lg="6">
@@ -61,7 +60,6 @@
             </v-col>
           </v-row>
         </template>
-
         <template v-slot:footer>
           <v-row class="mt-2 mx-5" align="center" justify="center">
             <span class="grey--text">Items per page</span>
@@ -82,9 +80,7 @@
                 </v-list-item>
               </v-list>
             </v-menu>
-
             <v-spacer></v-spacer>
-
             <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
             <v-btn fab dark color="secondary darken-3" class="mr-1" @click="formerPage">
               <v-icon>mdi-chevron-left</v-icon>
@@ -98,11 +94,9 @@
     </v-container>
   </div>
 </template>
-
 <script>
 import { service } from "@/plugins/request_service";
 import Comment from "@/components/restaurant/Comment";
-
 export default {
   components: {
     Comment

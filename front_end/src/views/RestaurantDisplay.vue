@@ -1,3 +1,11 @@
+/*
+ * MODULE NAME: RESTAURANTDISPLAY
+ * PROGRAMMER: YUE KA LONG, LAU PING TUNG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE RESTAURANT DISPLAY PAGE WHICH HANDLE THE LOGIN
+ *
+ */
 <template>
   <!-- id belongs to restaurant display-->
   <div id="RestaurantDisplay">

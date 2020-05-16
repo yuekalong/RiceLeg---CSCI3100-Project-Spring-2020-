@@ -1,3 +1,11 @@
+/*
+ * MODULE NAME: COMMENT
+ * PROGRAMMER: YUE KA LONG, LAU PING TUNG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE SIGNUP PAGE WHICH HANDLE THE LOGIN
+ *
+ */
 <template>
   <div>
     <v-btn outlined color="secondary" @click="openDialog">View More</v-btn>
@@ -75,6 +83,7 @@ export default {
     multiLine: true
   }),
   methods: {
+    // open the dialog
     openDialog() {
       this.dialog = true;
       service.get(`/restaurant/getComment/${this.restaurantName}`).then(res => {
@@ -83,6 +92,7 @@ export default {
         }
       });
     },
+    // send back the comment and rating to back-end
     sendFeedback() {
       if (this.newRating > 0 && this.newComment.length > 0) {
         const obj = {

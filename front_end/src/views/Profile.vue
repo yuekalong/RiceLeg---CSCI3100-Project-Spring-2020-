@@ -1,7 +1,11 @@
-/* * MODULE NAME: PROFILE * PROGRAMMER: LAM HIU LUI * VERSION: 1.0 (16 MAY 2020)
-* * PURPOSE: PROFILE PAGE STRUCTURE OF RICELEG * PROVIDE FUNCTIONALITIES OF
-PROFILE MANAGEMENT (CHANGE PASSWORD, CHANGE DISPLAY NAME, CHANGE SELF
-INTRODUCTION) */
+/* 
+* MODULE NAME: PROFILE 
+* PROGRAMMER: LAM HIU LUI 
+* VERSION: 1.0 (16 MAY 2020)
+* 
+* PURPOSE: PROFILE PAGE STRUCTURE OF RICELEG 
+* PROVIDE FUNCTIONALITIES OF PROFILE MANAGEMENT (CHANGE PASSWORD, CHANGE DISPLAY NAME, CHANGE SELF INTRODUCTION) 
+*/
 <template>
   <div id="chatroom">
     <v-container grid-list-xl>
@@ -21,25 +25,17 @@ INTRODUCTION) */
         <v-card-text class="white">
           <!-- Below will display current user profile details -->
           <v-container>
-            <v-card-text class="title pb-0"
-              >Username: {{ user.username }}</v-card-text
-            >
+            <v-card-text class="title pb-0">Username: {{ user.username }}</v-card-text>
             <v-row no-gutters>
               <v-col class="col-8">
-                <v-card-text class="title pb-0"
-                  >Display name: {{ user.displayName }}</v-card-text
-                >
+                <v-card-text class="title pb-0">Display name: {{ user.displayName }}</v-card-text>
               </v-col>
               <v-col>
                 <!-- User can change display name -->
-                <v-btn class="pb-0" @click="changedn = true"
-                  >Change display name</v-btn
-                >
+                <v-btn class="pb-0" @click="changedn = true">Change display name</v-btn>
                 <v-dialog v-model="changedn" persistent max-width="500">
                   <v-card width="100%">
-                    <v-card-title class="headline"
-                      >Change display name</v-card-title
-                    >
+                    <v-card-title class="headline">Change display name</v-card-title>
                     <v-row>
                       <v-col class="col-1"></v-col>
                       <v-col sm="6">
@@ -53,7 +49,7 @@ INTRODUCTION) */
                       </v-col>
                     </v-row>
                     <v-card-actions>
-                      <v-col cols="12" sm="6" md="4"> </v-col>
+                      <v-col cols="12" sm="6" md="4"></v-col>
                       <v-spacer></v-spacer>
                       <v-btn
                         color="secondary"
@@ -62,11 +58,8 @@ INTRODUCTION) */
                           changedn = false;
                           newdn = null;
                         "
-                        >Go back</v-btn
-                      >
-                      <v-btn color="primary" text @click="updateProfile()"
-                        >Yes</v-btn
-                      >
+                      >Go back</v-btn>
+                      <v-btn color="primary" text @click="updateProfile()">Yes</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -74,20 +67,14 @@ INTRODUCTION) */
             </v-row>
             <v-row no-gutters>
               <v-col class="col-8">
-                <v-card-text class="title pb-0"
-                  >Password: ●●●●●●●●●●</v-card-text
-                >
+                <v-card-text class="title pb-0">Password: ●●●●●●●●●●</v-card-text>
               </v-col>
               <v-col>
                 <!-- User can change password by entering old password and new password twice -->
-                <v-btn class="pb-0" @click="changepw = true"
-                  >Change password</v-btn
-                >
+                <v-btn class="pb-0" @click="changepw = true">Change password</v-btn>
                 <v-dialog v-model="changepw" persistent max-width="500">
                   <v-card width="100%">
-                    <v-card-title class="headline"
-                      >Change password</v-card-title
-                    >
+                    <v-card-title class="headline">Change password</v-card-title>
                     <v-row>
                       <v-col class="col-1"></v-col>
                       <v-col sm="8">
@@ -130,12 +117,7 @@ INTRODUCTION) */
                     <v-card-actions>
                       <v-spacer></v-spacer>
                       <!-- User can click on the eye icon to make password visible -->
-                      <v-btn
-                        type="password"
-                        @click="switchVisibility"
-                        text
-                        small
-                      >
+                      <v-btn type="password" @click="switchVisibility" text small>
                         <v-icon>fas fa-eye</v-icon>
                       </v-btn>
                       <v-btn
@@ -147,42 +129,27 @@ INTRODUCTION) */
                           newpw = null;
                           repw = null;
                         "
-                        >Go back</v-btn
-                      >
-                      <v-btn color="primary" text @click="updateProfile()"
-                        >Yes</v-btn
-                      >
+                      >Go back</v-btn>
+                      <v-btn color="primary" text @click="updateProfile()">Yes</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
               </v-col>
             </v-row>
-            <v-card-text class="title pb-0"
-              >Email: {{ user.email }}</v-card-text
-            >
+            <v-card-text class="title pb-0">Email: {{ user.email }}</v-card-text>
             <v-card-text class="title pb-0">Year: {{ user.year }}</v-card-text>
-            <v-card-text class="title pb-0"
-              >Major: {{ user.major }}</v-card-text
-            >
-            <v-card-text class="title pb-0"
-              >College: {{ user.college }}</v-card-text
-            >
+            <v-card-text class="title pb-0">Major: {{ user.major }}</v-card-text>
+            <v-card-text class="title pb-0">College: {{ user.college }}</v-card-text>
             <v-row no-gutters>
               <v-col class="col-8">
-                <v-card-text class="title pb-0"
-                  >Self Introduction: {{ user.selfIntro }}</v-card-text
-                >
+                <v-card-text class="title pb-0">Self Introduction: {{ user.selfIntro }}</v-card-text>
               </v-col>
               <v-col>
                 <!-- User can change self introduction -->
-                <v-btn class="pb-0" @click="changesi = true"
-                  >Change self introduction</v-btn
-                >
+                <v-btn class="pb-0" @click="changesi = true">Change self introduction</v-btn>
                 <v-dialog v-model="changesi" persistent max-width="500">
                   <v-card>
-                    <v-card-title class="headline"
-                      >Change self introduction</v-card-title
-                    >
+                    <v-card-title class="headline">Change self introduction</v-card-title>
                     <v-row>
                       <v-col class="col-1"></v-col>
                       <v-col sm="10">
@@ -197,7 +164,7 @@ INTRODUCTION) */
                       </v-col>
                     </v-row>
                     <v-card-actions>
-                      <v-col cols="12" sm="6" md="4"> </v-col>
+                      <v-col cols="12" sm="6" md="4"></v-col>
                       <v-spacer></v-spacer>
                       <v-btn
                         color="secondary"
@@ -206,11 +173,8 @@ INTRODUCTION) */
                           changesi = false;
                           newsi = null;
                         "
-                        >Go back</v-btn
-                      >
-                      <v-btn color="primary" text @click="updateProfile()"
-                        >Yes</v-btn
-                      >
+                      >Go back</v-btn>
+                      <v-btn color="primary" text @click="updateProfile()">Yes</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-dialog>
@@ -224,11 +188,9 @@ INTRODUCTION) */
               top
               color="secondary"
             >
-              Invalid password changing request!<br />
-              (Wrong old password/ non-matching new passwords)
-              <v-btn text color="blue lighten-2" @click="snackbar = false">
-                Close
-              </v-btn>
+              Invalid password changing request!
+              <br />(Wrong old password/ non-matching new passwords)
+              <v-btn text color="blue lighten-2" @click="snackbar = false">Close</v-btn>
             </v-snackbar>
             <!-- Warning notification for invalid self introduction -->
             <v-snackbar
@@ -250,9 +212,7 @@ INTRODUCTION) */
               color="secondary"
             >
               Please complete the form!
-              <v-btn text color="blue lighten-2" @click="success = false">
-                Close
-              </v-btn>
+              <v-btn text color="blue lighten-2" @click="success = false">Close</v-btn>
             </v-snackbar>
             <!-- Confirmation notification for user to know their information has been saved -->
             <v-snackbar
@@ -263,9 +223,7 @@ INTRODUCTION) */
               color="secondary"
             >
               Your information has been saved!
-              <v-btn text color="blue lighten-2" @click="success = false">
-                Close
-              </v-btn>
+              <v-btn text color="blue lighten-2" @click="success = false">Close</v-btn>
             </v-snackbar>
           </v-container>
         </v-card-text>

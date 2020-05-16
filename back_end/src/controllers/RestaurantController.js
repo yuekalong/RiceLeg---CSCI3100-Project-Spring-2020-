@@ -1,3 +1,15 @@
+/*
+ * COMPONENT NAME: RESTAURANTCONTROLLER
+ * PROGRAMMER: YUE KA LONG, TU CHEN HSIEN
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE RESTAURANT CONTROLLER OF THE EXPRESS.JS.
+ *          CONTROLLER IS USED TO CONTROL THE REQUEST SIGNAL AND GIVE THE RESPONSE AFTER
+ *          CERTAIN ACTION, IT HELPS TO CONVERT THE REQUEST PARAMS OR BODYS TO THE TYPE WE WANT TO SEE
+ *
+ *
+ */
+
 const services = require("../services/RestaurantServices.js");
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 
@@ -5,11 +17,13 @@ module.exports = {
   getAllRestaurant: function (req, res, next) {
     try {
       console.log("RestaurantController.getAllRestaurant started!");
+      // link bewteen router and the service of getting the restaurant details and brings to service reponse function
       return standardServiceResponse(res, next, services.getAllRestaurant());
     } catch (err) {
       console.log(
         "Error: RestaurantController.getAllRestaurant: " +
           JSON.parse(err.message)["message"]
+        // catch exception and shows the error message
       );
       next(err);
     }
@@ -17,7 +31,9 @@ module.exports = {
   getComment: function (req, res, next) {
     try {
       console.log("RestaurantController.getComment started!");
+      // link bewteen router and the service of getting the comment and brings to service reponse function
       const restaurantName = req.params.restaurantName;
+      // here is to find out the specific retaurantName from the parameters of the request and get the correct comment.
       return standardServiceResponse(
         res,
         next,
@@ -28,12 +44,15 @@ module.exports = {
         "Error: RestaurantController.getComment: " +
           JSON.parse(err.message)["message"]
       );
+      // catch exception and shows the error message
       next(err);
     }
   },
   commentAndRating: function (req, res, next) {
     try {
       console.log("RestaurantController.commentAndRating started!");
+      // different from req.param, we use req.body to represent a post parameter.
+
       const obj = JSON.parse(req.body.obj);
       return standardServiceResponse(res, next, services.commentAndRating(obj));
     } catch (err) {
@@ -41,6 +60,8 @@ module.exports = {
         "Error: RestaurantController.commentAndRating: " +
           JSON.parse(err.message)["message"]
       );
+      // catch exception and shows the error message
+
       next(err);
     }
   },

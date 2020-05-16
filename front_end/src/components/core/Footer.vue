@@ -1,3 +1,13 @@
+/*
+ * MODULE NAME: FOOTER
+ * PROGRAMMER: YUE KA LONG, VUETIFY TEMPLATE OWNER
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE FOOTER OF THE APPLICATION. 
+ *          
+ *
+ */
+<!-- This is our footer -->
 <template>
   <v-footer class="py-4" dark height="auto">
     <v-container mx-auto>

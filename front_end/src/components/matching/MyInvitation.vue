@@ -1,3 +1,12 @@
+/*
+ * MODULE NAME: MYINVITATION
+ * PROGRAMMER: YUE KA LONG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE MYINVITATION PAGE WHICH IS THE DIALOG(POP-UP) WINDOW 
+ *          THAT AFTER CLICK THE REQUEST ON MYREQUEST PAGE
+ *
+ */
 <template>
   <div>
     <v-btn color="primary" text @click="fetchData">View Invitations</v-btn>
@@ -103,9 +112,10 @@
 import { service } from "@/plugins/request_service";
 
 export default {
-  props: ["requestID"],
+  props: ["requestID"], // get the requestID from myRequest
   data: () => ({
-    dialog: false,
+    dialog: false, //dialog boolean for popup or not
+    // the header of the card
     headers: [
       { text: "Display Name", value: "displayName" },
       { text: "Year", value: "year" },
@@ -113,11 +123,12 @@ export default {
       { text: "College", value: "college" },
       { text: "Self Introduction", value: "selfIntro" }
     ],
-    invitations: [],
-    confirmDialog: false,
-    selectedUser: ""
+    invitations: [], // the invitations
+    confirmDialog: false, //confirm dialog boolean for popup or not
+    selectedUser: "" // selected user information
   }),
   methods: {
+    // get the invitation
     fetchData() {
       service.get(`/matching/getInvitation/${this.requestID}`).then(res => {
         if (res.data.success) {
@@ -126,11 +137,13 @@ export default {
         }
       });
     },
+    // open the dialog
     openConfirmDialog(object) {
       this.dialog = false;
       this.selectedUser = object;
       this.confirmDialog = true;
     },
+    // accept the invitation
     acceptInvite() {
       const info = {
         username_A: this.$store.state.user.username,
@@ -139,12 +152,12 @@ export default {
       };
       service
         .post("/matching/acceptInvitation", {
-          info: JSON.stringify(info)
+          info: JSON.stringify(info) // pass the information into back-end by using body of the request
         })
         .then(res => {
           if (res.data.success) {
             this.confirmDialog = false;
-            this.$emit("refresh");
+            this.$emit("refresh"); //emit to parent myRequest to refresh
           }
         });
     }

@@ -1,5 +1,9 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("feedback", table => {
+/*
+    create the table of feedback
+*/
+
+exports.up = function (knex) {
+  return knex.schema.createTable("feedback", (table) => {
     table.increments("id").primary();
     table.string("restaurantName").notNullable();
     table.string("opinion");
@@ -12,6 +16,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTable("feedback");
 };

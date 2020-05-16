@@ -1,3 +1,11 @@
+/*
+ * COMPONENT NAME: SEND_REQUEST_SERVICE
+ * PROGRAMMER: LAM HIU LUI, YUE KA LONG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: BACKEND SERVICE FOR DOING THE SERVICE EXACTLY IN HERE.
+ */
+
 const knex = require("knex")(require("../../knexfile.js")["development"]);
 const moment = require("moment-timezone");
 
@@ -42,7 +50,8 @@ module.exports = {
     );
     return;
   },
-  getListOfRequest: async function () {   // fetch request data from database (request)
+  getListOfRequest: async function () {
+    // fetch request data from database (request)
     //browse request: showing requests
     const currDate = moment().format("YYYY-MM-DD");
     const currTime = moment().format("HH:mm:ss");

@@ -1,3 +1,10 @@
+/*
+* MODULE NAME: MATCHING PAGE
+* PROGRAMMER: Wong Kin Chi
+* VERSION: 1.0 (16 MAY 2020)
+*
+* PURPOSE: BASIC STRUCTURE OF THE MATCHING PAGE
+*/
 <template>
   <v-container grid-list-xl>
     <v-card>

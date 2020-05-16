@@ -9,7 +9,7 @@
   "description": "csci3100_back_end",
   "main": "app.js",
   "repository": "git@gitlab.com-personal:yuekalong-personal/csci3100-back-end.git",
-  "author": "Yue Ka Long <long@aigniter.com>",
+  "author": "Yue Ka Long <1155110560@link.cuhk.edu.hk>",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^4.0.1",

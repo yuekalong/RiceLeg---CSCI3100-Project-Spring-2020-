@@ -1,3 +1,10 @@
+/*
+* COMPONENT NAME: REUQEST_ROUTER
+* PROGRAMMER: LAM HIU LUI, YUE KA LONG, WONG KIN CHI
+* VERSION: 1.0 (16 MAY 2020)
+*
+* PURPOSE: TO ASSIGN THE ROUTE FOR DOING CERTAIN ACTIONS.
+*/
 const express = require("express");
 const router = express.Router();
 const requestController = require("../controllers/RequestController.js");

@@ -1,3 +1,13 @@
+/*
+ * MODULE NAME: INIT-PASSPORT
+ * PROGRAMMER: YUE KA LONG, VUETIFY TEMPLATE OWNER
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE PASSPORT OF THE BACK-END SERVER.
+ *          WHICH HELP TO HANDLE THE REQUESTS OF AUTHENIICATION IN A SECURITY WAY.
+ *
+ *
+ */
 const knex = require("knex")(require("../knexfile.js")["development"]);
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;

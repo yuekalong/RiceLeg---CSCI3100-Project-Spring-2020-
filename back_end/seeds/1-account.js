@@ -1,3 +1,7 @@
+/*
+    set the demo data of account table
+*/
+
 exports.seed = async function (knex, Promise) {
   // Deletes ALL existing entries
   await knex("account").del();

@@ -1,9 +1,21 @@
+/*
+* COMPONENT NAME: ABOUT
+* PROGRAMMER: LAM HIU LUI
+* VERSION: 1.0 (16 MAY 2020)
+*
+* PURPOSE: TO PROVIDE A BRIEF INTRODUCTION OF RICELEG ON THE HOMEPAGE
+*/
+
 <template>
+<!-- To introduce people what RiceLeg is about and our functions -->
   <v-card id="about" tag="section" flat>
+    <!-- title question -->
     <v-card class="display-4 bold mb-3" flat>
       <p style="color:#FFB6D0">Who are we?</p>
     </v-card>
+    <!-- spacing helper -->
     <v-card height="100" flat></v-card>
+    <!-- answer -->
     <v-card class="display-3 bold mb-3" flat>
       <p style="color:#576066">
         RiceLeg is a social web application that helps CUHK students to find new
@@ -11,6 +23,7 @@
       </p>
     </v-card>
     <v-card height="300" flat></v-card>
+    <!-- parallax banner for distinguishing messages and modern style -->
     <v-parallax
       id="homepage"
       src="@/assets/banner_photo/social.jpg"

@@ -1,8 +1,18 @@
+/*
+ * MODULE NAME: LOGIN
+ * PROGRAMMER: TU CHEN HSIEN
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE SIGNUP PAGE WHICH HANDLE THE LOGIN
+ *
+ */
+ <!--this file construct sign up for users to sign up-->
 <template>
   <v-container fluid>
     <v-layout align-center justify-center>
       <v-flex xs10>
         <v-card>
+          <!-- Cover photo -->
           <v-img
             class="white--text"
             height="200px"
@@ -21,7 +31,15 @@
               <v-flex xs12 md6>
                 <v-form ref="form" v-model="valid" :lazy-validation="lazy">
                   <div class="red--text">{{ errMsg }}</div>
-                  <v-text-field v-model="name" :rules="nameRules" label="Username" required></v-text-field>
+                  <!-- name text field -->
+                  <v-text-field
+                    v-model="name"
+                    :counter="10"
+                    :rules="nameRules"
+                    label="Name"
+                    required
+                  ></v-text-field>
+                  <!-- password text field -->
                   <v-text-field
                     v-model="password"
                     :rules="passwordRules"
@@ -29,8 +47,10 @@
                     type="password"
                     required
                   ></v-text-field>
+                  <!-- email text field -->
                   <v-text-field v-model="email" :rules="emailRules" label="E-mail" required></v-text-field>
 
+                  <!-- displayName text field -->
                   <v-text-field
                     v-model="displayName"
                     :rules="displayNameRules"
@@ -38,8 +58,10 @@
                     required
                   ></v-text-field>
 
+                  <!-- major text field -->
                   <v-text-field v-model="major" :rules="majorRules" label="Major" required></v-text-field>
 
+                  <!-- college selection field -->
                   <v-select
                     :items="labels"
                     :value="collegeSelected"
@@ -66,8 +88,10 @@
                     </template>
                   </v-select>
 
+                  <!-- year text field -->
                   <v-text-field v-model="year" :rules="yearRules" label="Year" required></v-text-field>
 
+                  <!-- self-introduction text field -->
                   <v-text-field
                     v-model="selfIntro"
                     :rules="selfIntroRules"
@@ -75,6 +99,7 @@
                     required
                   ></v-text-field>
 
+                  <!-- checkbox -->
                   <v-checkbox
                     v-model="checkbox"
                     :rules="[v => !!v || 'You must agree to continue!']"
@@ -112,6 +137,8 @@ export default {
     lazy: false,
     name: "",
     chip: true,
+
+    //selection set for college
     labels: [
       { name: "Chung Chi College" },
       { name: "New Asia College" },
@@ -123,22 +150,32 @@ export default {
       { name: "CW Chu College" },
       { name: "Morningside College" }
     ],
+
+    //rules for username
     nameRules: [
       v => !!v || "Name is required",
       v => (v && v.length <= 15) || "Name must be less than 15 characters"
     ],
     email: "",
+
+    //rules for email
     emailRules: [
       v => !!v || "E-mail is required",
       v => /.+@link.cuhk.edu.hk+/.test(v) || "E-mail must be valid"
     ],
     major: "",
+
+    //rules for major
     majorRules: [v => !!v || "Major is required"],
 
     displayName: "",
+
+    //rules for display name
     displayNameRules: [v => !!v || "Ur display name is required"],
 
     password: "",
+
+    //rules for password
     passwordRules: [
       v =>
         (v || "").match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
@@ -148,9 +185,13 @@ export default {
     ],
 
     selfIntro: "",
+
+    //rules for self introduction
     selfIntroRules: [v => !!v || "Self-Introduction is required"],
 
     year: "",
+
+    //rules for year
     yearRules: [
       v => (v || "").match(/^[0-9]*[1-9][0-9]*$/) || "year is required"
     ],
@@ -206,6 +247,8 @@ export default {
         return 0;
       }
     },
+
+    //method to submit user information to the database
     submitData() {
       service
         .post("/auth/signUp", {
@@ -219,11 +262,13 @@ export default {
           selfIntro: this.selfIntro
         })
         .then(res => {
+          //action for successful connection
           if (res.data.success) {
             console.log("Update to database success!");
             this.finished = true;
             this.$router.push("/");
           } else {
+            //action for unsuccessful connection
             console.log("Update to database failed!");
           }
         })

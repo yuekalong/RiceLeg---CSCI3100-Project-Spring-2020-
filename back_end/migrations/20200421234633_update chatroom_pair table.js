@@ -1,3 +1,7 @@
+/*
+    update the table schema of chatroom_pair
+*/
+
 exports.up = function (knex) {
   return knex.schema.table("chatroom_pair", (table) => {
     table.integer("requestID").unsigned().notNullable();

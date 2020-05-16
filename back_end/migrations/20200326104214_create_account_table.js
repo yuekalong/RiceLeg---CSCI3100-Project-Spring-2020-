@@ -1,5 +1,9 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("account", table => {
+/*
+    create the table of account
+*/
+
+exports.up = function (knex) {
+  return knex.schema.createTable("account", (table) => {
     table.string("username").primary();
     table.string("password").notNullable();
     table.string("displayName");
@@ -11,6 +15,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTable("account");
 };

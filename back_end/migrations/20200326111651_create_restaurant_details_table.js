@@ -1,5 +1,9 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("restaurant_details", table => {
+/*
+    create the table of restaurant_details
+*/
+
+exports.up = function (knex) {
+  return knex.schema.createTable("restaurant_details", (table) => {
     table.string("restaurantName").primary();
     table.string("restaurantDestination");
     table.time("dailyOpeningTime");
@@ -9,6 +13,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTable("restaurant_details");
 };

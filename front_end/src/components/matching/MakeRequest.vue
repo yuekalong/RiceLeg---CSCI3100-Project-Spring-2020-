@@ -1,5 +1,9 @@
+/* * COMPONENT NAME: MAKE A REQUEST * PROGRAMMER: Wong Kin Chi * VERSION: 1.0
+(16 MAY 2020) * * PURPOSE: MAKE A REQUEST FORM FOR MAKING REQUEST * AND UPLOAD
+THE REQUEST DATA TO DATABASE */
 <template>
   <v-form ref="form" v-model="valid">
+    <!-- // make request from -->
     <v-text-field
       v-model="name"
       :counter="30"
@@ -7,7 +11,7 @@
       label="Name of Request (example: A Wonderful Night)"
       required
     ></v-text-field>
-
+    <!-- // get request name -->
     <v-row>
       <v-col cols="6" lg="6">
         <v-menu
@@ -15,7 +19,7 @@
           :close-on-content-click="false"
           transition="scale-transition"
           offset-y
-          max-width="290px"
+          max-width="290pzx"
           min-width="290px"
         >
           <template v-slot:activator="{ on }">
@@ -29,13 +33,24 @@
             ></v-text-field>
           </template>
 
-          <v-date-picker v-model="date" no-title :min="currentdate" @input="menu1 = false"></v-date-picker>
+          <v-date-picker
+            v-model="date"
+            no-title
+            :min="currentdate"
+            @input="menu1 = false"
+          ></v-date-picker>
         </v-menu>
       </v-col>
     </v-row>
+    <!-- get dating date -->
     <v-row>
       <v-col sm="5">
-        <v-dialog ref="start" v-model="modal" :return-value.sync="start" width="500px">
+        <v-dialog
+          ref="start"
+          v-model="modal"
+          :return-value.sync="start"
+          width="500px"
+        >
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="start"
@@ -55,12 +70,20 @@
           >
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="resetStart">Reset</v-btn>
-            <v-btn text color="primary" @click="$refs.start.save(start)">OK</v-btn>
+            <v-btn text color="primary" @click="$refs.start.save(start)"
+              >OK</v-btn
+            >
           </v-time-picker>
         </v-dialog>
       </v-col>
+      <!-- // get starting time -->
       <v-col sm="5">
-        <v-dialog ref="end" v-model="modal2" :return-value.sync="end" width="500px">
+        <v-dialog
+          ref="end"
+          v-model="modal2"
+          :return-value.sync="end"
+          width="500px"
+        >
           <template v-slot:activator="{ on }">
             <v-text-field
               v-model="end"
@@ -84,12 +107,13 @@
               color="primary"
               @click="$refs.end.save(end)"
               :rules="[v => !!v || 'Location is required']"
-            >OK</v-btn>
+              >OK</v-btn
+            >
           </v-time-picker>
         </v-dialog>
       </v-col>
     </v-row>
-
+    <!-- // get ending time -->
     <v-select
       v-model="location"
       :items="locationlist"
@@ -97,28 +121,55 @@
       label="Location"
       required
     ></v-select>
-
-    <v-checkbox color="green darken-2" v-model="state" label="Are you a vegetarian?"></v-checkbox>
-
+    <!-- // get location -->
+    <v-checkbox
+      color="green darken-2"
+      v-model="state"
+      label="Are you a vegetarian?"
+    ></v-checkbox>
+    <!-- check whether user is vegetarian -->
     <v-row>
       <v-col cols="6" lg="6">
-        <v-btn color="primary" class="mr-4" v-if="valid == false" @click="validate">Confirm</v-btn>
-        <v-btn color="primary" class="mr-4" v-if="valid == true" @click="insertData">Confirm</v-btn>
-
+        <v-btn
+          color="primary"
+          class="mr-4"
+          v-if="valid == false"
+          @click="validate"
+          v-on="on"
+          >Confirm</v-btn
+        >
+        <!-- //check the if there is missing input -->
+        <v-btn
+          color="primary"
+          class="mr-4"
+          v-if="valid == true"
+          @click="insertData"
+          v-on="on"
+          >Confirm</v-btn
+        >
+        <!-- upload request date to database -->
         <v-btn color="secondary" class="mr-4" @click="reset">Reset Form</v-btn>
         <v-dialog v-model="pop" max-width="500">
           <v-card>
             <v-card-title class="headline">Request Sent</v-card-title>
 
-            <v-card-text>Hope you have a Wonderful Meal</v-card-text>
+            <v-card-text>
+              Hope you have a Wonderful Meal
+            </v-card-text>
 
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text v-on:click="gotosite()">Check Restaurant Menu</v-btn>
+              <v-btn color="green darken-1" text v-on:click="gotosite()">
+                Check Restaurant
+              </v-btn>
 
-              <v-btn color="green darken-1" text v-on:click="gotorequest()">Browse Request</v-btn>
+              <v-btn color="green darken-1" text v-on:click="gotorequest()">
+                Browse Request
+              </v-btn>
 
-              <v-btn color="green darken-1" text @click="pop = false">Close</v-btn>
+              <v-btn color="green darken-1" text @click="pop = false">
+                Close
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -240,13 +291,6 @@ export default {
         });
 
       this.pop = true;
-    },
-    getLocationList() {
-      service.get("/matching/getLocationList").then(res => {
-        if (res.data.success) {
-          this.locationlist = res.data.data;
-        }
-      });
     }
   }
 };

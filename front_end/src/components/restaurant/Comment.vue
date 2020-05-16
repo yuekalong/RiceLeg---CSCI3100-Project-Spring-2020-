@@ -6,13 +6,13 @@
         <v-card-title class="headline secondary--text justify-center">Comment and Rating</v-card-title>
         <v-card-text>
           <v-row>
-            <v-col v-for="item in feedback" :key="item.id" cols="12" sm="3">
+            <v-col v-for="item in feedback" :key="item.id" cols="12" sm="3.5">
               <v-card
                 outlined
                 class="ma-3"
                 centered
                 min-height="90%"
-                style="text-align:center; border: 1px solid #FFB6D0;"
+                style="word-break: break-all;"
               >
                 <v-rating :value="parseInt(item.rating)" readonly></v-rating>
                 <v-card-text

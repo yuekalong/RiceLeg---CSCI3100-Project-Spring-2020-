@@ -1,3 +1,11 @@
+/*
+* COMPONENT NAME: REUQEST_ROUTER
+* PROGRAMMER: LAM HIU LUI, YUE KA LONG
+* VERSION: 1.0 (16 MAY 2020)
+*
+* PURPOSE: TO CONTROL THE REQUEST SIGNAL AND GIVE THE RESPONSE AFTER
+*          CERTAIN ACTION, IT HELPS TO CONVERT THE REQUEST PARAMS OR BODYS TO THE TYPE WE WANT TO SEE
+*/
 const { standardServiceResponse } = require("../utils/ResponseHandler");
 const requestService = require("../services/RequestServices.js");
 

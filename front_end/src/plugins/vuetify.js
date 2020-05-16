@@ -1,3 +1,12 @@
+/*
+ * MODULE NAME: VUETIFY
+ * PROGRAMMER: YUE KA LONG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE VUETIFY DOCUMENT WHICH SET THE VARIABLE FOR SOME COLOR CODE
+ *          AND IT HELPS TO USE MORE EASILY AND SYNC THE STYLE OF THE APPLICATION
+ *
+ */
 import Vue from "vue";
 import Vuetify from "vuetify/lib";
 import "@fortawesome/fontawesome-free/css/all.css"; // Ensure you are using css-loader

@@ -1,6 +1,19 @@
+/*
+ * MODULE NAME: MYREQUEST
+ * PROGRAMMER: YUE KA LONG
+ * VERSION: 1.0 (16 MAY 2020)
+ *
+ * PURPOSE: THIS IS THE MYQUEST PAGE WHICH HELPS TO HANDLE THE REQUESTS CREATED BY THE OWNER
+ *
+ */
 <template>
   <v-row no-gutters>
-    <v-col v-for="object in listOfRequest" :key="object.requestID" cols="12" sm="6">
+    <v-col
+      v-for="object in listOfRequest"
+      :key="object.requestID"
+      cols="12"
+      sm="6"
+    >
       <v-card class="ma-3" centered min-height="300px">
         <div>
           <v-img
@@ -13,9 +26,13 @@
           </v-img>
         </div>
         <v-card-text pa-3>
-          <div class="subtitle-1 py-0 black--text">Request number: {{ object.requestID }}</div>
+          <div class="subtitle-1 py-0 black--text">
+            Request number: {{ object.requestID }}
+          </div>
           <div class="subtitle-1 py-0">Location: {{ object.location }}</div>
-          <div class="subtitle-1 py-0">Date: {{ object.date.slice(0, 10) }}</div>
+          <div class="subtitle-1 py-0">
+            Date: {{ object.date.slice(0, 10) }}
+          </div>
           <div class="subtitle-1 py-0">
             Time: {{ object.startingTime.slice(0, 5) }} -
             {{ object.endingTime.slice(0, 5) }}
@@ -51,7 +68,9 @@ export default {
     this.getListOfRequest();
   },
   methods: {
+    // get the list of request created by the user
     getListOfRequest() {
+      // send the request to back-end to get the informations
       service
         .get(`/matching/getRequest/${this.$store.state.user.username}`)
         .then(res => {
@@ -73,13 +92,12 @@ export default {
                   year: s.year,
                   selfIntro: s.selfIntro,
                   stateVegetarian: s.stateVegetarian
-                  //requestName, location, date, startingTime, endingTime, major, year, selfIntro, stateVegetarian
                 })
             );
-            //   date = moment(date).format("YYYY-MM-DD HH:mm:ss");
           }
         });
     },
+    // refresh the page
     refresh() {
       this.snackbar = true;
       this.getListOfRequest();

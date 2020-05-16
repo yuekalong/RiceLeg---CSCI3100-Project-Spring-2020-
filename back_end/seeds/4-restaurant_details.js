@@ -1,3 +1,7 @@
+/*
+    set the demo data of restaurant_details table
+*/
+
 exports.seed = function (knex) {
   // Deletes ALL existing entries
   return knex("restaurant_details")

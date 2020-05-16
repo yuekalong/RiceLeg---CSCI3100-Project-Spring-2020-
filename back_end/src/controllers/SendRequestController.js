@@ -1,19 +1,23 @@
+/*
+* COMPONENT NAME: SENDREQUESTCONTROLLER
+* PROGRAMMER: Wong Kin Chi
+* VERSION: 1.0 (16 MAY 2020)
+*
+* PURPOSE: CONTROLLER IS USED TO CONTROL THE REQUEST SIGNAL AND GIVE THE RESPONSE AFTER
+*          CERTAIN ACTION, IT HELPS TO CONVERT THE REQUEST PARAMS OR BODYS TO THE TYPE WE WANT TO SEE
+*/
+// import the module for handling the request in a certain format
 const { standardServiceResponse } = require("../utils/ResponseHandler");
+// import the service, where to do the query or editing to the database
 const testServices = require("../services/SendRequestServices.js");
 
+// this controller is used to control the request signal and give the response after certain action
+// it helps to convert the request params or bodys to the type we want to use
+
+
 module.exports = {
-  queryLocationList: function(req, res, next) {
-    try {
-      console.log("SendRequestController.queryLocationList started!");
-      return standardServiceResponse(res, next, testServices.queryLocationList());
-    } catch (err) {
-      console.log(
-        "Error: SendRequestController.queryLocationList: " +
-          JSON.parse(err.message)["message"]
-      );
-      next(err);
-    }
-  },
+
+  //  this is for getting all existing request
   queryRequest: function(req, res, next) {
     try {
       console.log("SendRequestController.queryRequestt started!");
@@ -26,6 +30,7 @@ module.exports = {
       next(err);
     }
   },
+  //  this is for getting all existing invitation
   queryInvitation: function(req, res, next) {
     try {
       console.log("SendRequestController.queryInivation started!");
@@ -38,6 +43,7 @@ module.exports = {
       next(err);
     }
   },
+  // this is for makeing a new request
   queryInsertRequestInfo: function(req, res, next) {
     try {
       console.log("SendRequestController.queryInsertRequestInfo started!");

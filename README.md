@@ -2,6 +2,10 @@
 **CSCI3100 Software Enigeering (Spring 2020) Group Project: RiceLeg**
 
 This software is created by the CSCI3100 students who studied in 2020 semester 2. We are *Group 27* and our project is called RiceLeg which is an online web application that aims to help university students to find new friends during lunch and dinner time and extend their social circles.
+
+Here is the link to try this project
+https://riceleg.herokuapp.com/
+
 ****
 **In this repository**
 
